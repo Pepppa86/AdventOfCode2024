@@ -1,4 +1,3 @@
-import 'package:advent_of_code2024/pages/day01.dart';
 import 'package:advent_of_code2024/utils/enums.dart';
 import 'package:advent_of_code2024/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +35,17 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Day01()));
-                },
-                child: Text(Days.day01.title)),
-          ],
+          children: [Days.day01, Days.day02].map((day) {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => day.page),
+                );
+              },
+              child: Text(day.title),
+            );
+          }).toList(),
         ),
       ),
     );

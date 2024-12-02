@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import '../pages/day01.dart';
+import '../pages/day02.dart';
 import 'enums.dart';
 
 extension DaysExtension on Days {
@@ -51,6 +55,17 @@ extension DaysExtension on Days {
         return 'Day 23';
       case Days.day24:
         return 'Day 24';
+    }
+  }
+
+  Widget get page {
+    switch (this) {
+      case Days.day01:
+        return const Day01();
+      case Days.day02:
+        return const Day02();
+      default:
+        return Container();
     }
   }
 }
