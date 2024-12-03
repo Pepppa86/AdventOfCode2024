@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/day01.dart';
 import '../pages/day02.dart';
+import '../pages/day03.dart';
 import 'enums.dart';
 
 extension DaysExtension on Days {
@@ -64,6 +65,8 @@ extension DaysExtension on Days {
         return const Day01();
       case Days.day02:
         return const Day02();
+      case Days.day03:
+        return const Day03();
       default:
         return Container();
     }

@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Days.day01, Days.day02].map((day) {
+          children: [Days.day01, Days.day02, Days.day03].map((day) {
             return ElevatedButton(
               onPressed: () {
                 Navigator.push(
