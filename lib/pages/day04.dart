@@ -1,5 +1,4 @@
 import 'package:advent_of_code2024/pages/base/base_day.dart';
-import 'package:flutter/material.dart';
 
 import '../utils/enums.dart';
 
