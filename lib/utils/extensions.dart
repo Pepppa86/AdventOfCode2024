@@ -1,3 +1,4 @@
+import 'package:advent_of_code2024/pages/day04.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/day01.dart';
@@ -67,6 +68,8 @@ extension DaysExtension on Days {
         return const Day02();
       case Days.day03:
         return const Day03();
+      case Days.day04:
+        return const Day04();
       default:
         return Container();
     }

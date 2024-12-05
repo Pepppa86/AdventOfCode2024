@@ -1,3 +1,4 @@
+import 'package:advent_of_code2024/pages/base/base_day.dart';
 import 'package:advent_of_code2024/utils/enums.dart';
 import 'package:advent_of_code2024/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Days.day01, Days.day02, Days.day03].map((day) {
+          children: Days.values.where((e) => e.page is BaseDay).map((day) {
             return ElevatedButton(
               onPressed: () {
                 Navigator.push(
