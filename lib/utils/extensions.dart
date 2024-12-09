@@ -1,10 +1,14 @@
-import 'package:advent_of_code2024/pages/day04.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/day01.dart';
 import '../pages/day02.dart';
 import '../pages/day03.dart';
+import '../pages/day04.dart';
 import '../pages/day05.dart';
+import '../pages/day06.dart';
+import '../pages/day07.dart';
+import '../pages/day08.dart';
+import '../pages/day09.dart';
 import 'enums.dart';
 
 extension DaysExtension on Days {
@@ -73,6 +77,14 @@ extension DaysExtension on Days {
         return const Day04();
       case Days.day05:
         return const Day05();
+      case Days.day06:
+        return const Day06();
+      case Days.day07:
+        return Day07();
+      case Days.day08:
+        return const Day08();
+      case Days.day09:
+        return const Day09();
       default:
         return Container();
     }
