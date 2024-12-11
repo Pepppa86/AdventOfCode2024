@@ -23,29 +23,59 @@ class Day11 extends BaseDay {
 
   @override
   String? resolveTask2(List<String> lines) {
-    var initStones = lines.join("").split(" ").map((e) => Stone(int.parse(e))).toList();
+    var initStones = lines.join("").split(" ").map((e) => int.parse(e)).toList();
 
-    var startDate = DateTime.now();
+    var date = DateTime.now();
+    var counter = countStones(initStones, 50);
+    print("Counter: $counter - ${DateTime.now().difference(date)}");
+
+    /*var blinkCount = 1;
+    var loopCount = 25;
+    var previuousCounter = 0;
+    while(loopCount >= 0) {
+      var counter = countStones(initStones, blinkCount);
+      print("Blink: $blinkCount, Counter: $counter \t diff: ${counter - previuousCounter}");
+      previuousCounter = counter;
+      blinkCount++;
+      loopCount--;
+    }*/
+    return null;
+    //return counter.toString();
+  }
+
+  int countStones(List<int> initStones, int blinkCount) {
     int counter = 0;
-    var blinkCount = 50;
-    for (var stone in initStones) {
-      stone.blinkOnStone(blinkCount, () {
+    for (var number in initStones) {
+      _blinkOnStone(blinkCount, number, () {
         counter++;
-        /*if (counter % 100000000 == 0) {
-          print("${DateTime.now()} - Counter: $counter");
-        }*/
       });
     }
 
-    /*var count = 0;
-    for(var stone in initStones) {
-      count += stone.getStoneCount();
-    }
-    print("Count: $count");
-    return "$count";*/
+    return counter;
+  }
 
-    print("Counter: $counter - Duration: ${DateTime.now().difference(startDate)}");
-    return counter.toString();
+  void _blinkOnStone(int blinkCount, int number, Function() callback) {
+    if (blinkCount == 0) {
+      callback();
+    } else {
+      for (var number in _createStones(number)) {
+        _blinkOnStone(blinkCount - 1, number, callback);
+      }
+    }
+  }
+
+  List<int> _createStones(int number) {
+    if (number == 0) {
+      return [1];
+    } else if (number.toString().length % 2 == 0) {
+      int half = number.toString().length ~/ 2;
+      return [
+        int.parse(number.toString().substring(0, half)),
+        int.parse(number.toString().substring(half))
+      ];
+    } else {
+      return [number * 2024];
+    }
   }
 }
 
