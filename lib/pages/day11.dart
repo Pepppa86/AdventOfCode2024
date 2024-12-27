@@ -7,74 +7,106 @@ class Day11 extends BaseDay {
 
   @override
   String? resolveTask1(List<String> lines) {
-    /*var initStones = lines.join("").split(" ").map((e) => Stone(e)).toList();
-    var copyStones = <Stone>[];
-    copyStones.addAll(initStones);
-    for(int i = 0; i < 25; i++) {
-      var newStones = <Stone>[];
-      for(var stone in copyStones) {
-        newStones.addAll(stone.blink());
-      }
-      copyStones = newStones;
+    var initStones = lines.join("").split(" ").toList();
+
+    var blinkCount = 25;
+    int result = 0;
+    for (var stone in initStones) {
+      result += _blink(int.parse(stone), blinkCount, {});
     }
-    return "${copyStones.length}";*/
-    return null;
+    return "$result";
   }
 
   @override
   String? resolveTask2(List<String> lines) {
-    var initStones = lines.join("").split(" ").map((e) => int.parse(e)).toList();
+    var initStones = lines.join("").split(" ").toList();
 
-    var date = DateTime.now();
-    var counter = countStones(initStones, 50);
-    print("Counter: $counter - ${DateTime.now().difference(date)}");
-
-    /*var blinkCount = 1;
-    var loopCount = 25;
-    var previuousCounter = 0;
-    while(loopCount >= 0) {
-      var counter = countStones(initStones, blinkCount);
-      print("Blink: $blinkCount, Counter: $counter \t diff: ${counter - previuousCounter}");
-      previuousCounter = counter;
-      blinkCount++;
-      loopCount--;
-    }*/
-    return null;
-    //return counter.toString();
-  }
-
-  int countStones(List<int> initStones, int blinkCount) {
-    int counter = 0;
-    for (var number in initStones) {
-      _blinkOnStone(blinkCount, number, () {
-        counter++;
-      });
+    var blinkCount = 75;
+    int result = 0;
+    for (var stone in initStones) {
+      result += _blink(int.parse(stone), blinkCount, {});
     }
-
-    return counter;
+    return "$result";
   }
 
-  void _blinkOnStone(int blinkCount, int number, Function() callback) {
-    if (blinkCount == 0) {
-      callback();
-    } else {
-      for (var number in _createStones(number)) {
-        _blinkOnStone(blinkCount - 1, number, callback);
+  int _blink(int stone, int times, Map<int, Map<int, int>> dictionary) {
+    if (times == 0) {
+      return 1;
+    }
+    var d1 = dictionary[stone];
+    if (d1 != null) {
+      var e = d1[times];
+      if (e != null) {
+        return e;
       }
     }
+
+    String t = stone.toString();
+    int e;
+    if (stone == 0) {
+      e = _blink(1, times - 1, dictionary);
+    } else if (t.length % 2 == 0) {
+      int half = t.length ~/ 2;
+      int leftStone = int.parse(t.substring(0, half));
+      int rightStone = int.parse(t.substring(half));
+      e = _blink(leftStone, times - 1, dictionary) + _blink(rightStone, times - 1, dictionary);
+    } else {
+      e = _blink(stone * 2024, times - 1, dictionary);
+    }
+    if (d1 == null) {
+      d1 = {};
+      dictionary[stone] = d1;
+    }
+    d1[times] = e;
+    return e;
   }
 
-  List<int> _createStones(int number) {
-    if (number == 0) {
-      return [1];
-    } else if (number.toString().length % 2 == 0) {
-      int half = number.toString().length ~/ 2;
-      return [
-        int.parse(number.toString().substring(0, half)),
-        int.parse(number.toString().substring(half))
-      ];
+  void countStonesNew(int blinkCount, Map<String, int> map) {
+    print("BlinkCount: $blinkCount");
+    if (blinkCount == 0) {
+      return;
+    }
+    var entries = map.entries.where((element) => element.value > 0).toList();
+    for (var entry in entries) {
+      for (int i = 0; i < entry.value; i++) {
+        _createStones(entry.key, map);
+      }
+    }
+    countStonesNew(--blinkCount, map);
+  }
+
+  void _createStones(String number, Map<String, int> map) {
+    map[number] = map.containsKey(number) ? map[number]! - 1 : 0;
+    if (number == "0") {
+      map["1"] = map.containsKey("1") ? map["1"]! + 1 : 1;
+    } else if (number.length % 2 == 0) {
+      int half = number.length ~/ 2;
+      var first = number.substring(0, half);
+      map[first] = map.containsKey(first) ? map[first]! + 1 : 1;
+      var second = number.substring(half);
+      map[second] = map.containsKey(second) ? map[second]! + 1 : 1;
     } else {
-      return [number * 2024];
+      var value = (int.parse(number) * 2024).toString();
+      map[value] = map.containsKey(value) ? map[value]! + 1 : 1;
+    }
+  }
+
+  void countStones(List<int> initStones, int blinkCount, Map<int, int> map) {
+    for (var number in initStones) {
+      _blinkOnStone(blinkCount, number, map);
+    }
+  }
+
+  void _blinkOnStone(int blinkCount, int number, Map<int, int> map) {
+    if (blinkCount == 0) {
+      return;
+    } else {
+      map[number] = map.containsKey(number) ? map[number]! - 1 : 0;
+      //_createStones(number, map);
+      /*for (var number in stones) {
+        map[number] = map.containsKey(number) ? map[number]! + 1 : 1;
+        _blinkOnStone(blinkCount - 1, number, map);
+      }*/
     }
   }
 }
