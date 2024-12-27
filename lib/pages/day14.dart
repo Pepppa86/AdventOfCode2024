@@ -1,5 +1,4 @@
 import 'package:advent_of_code2024/pages/base/base_day.dart';
-import 'package:collection/collection.dart';
 
 import '../utils/enums.dart';
 
@@ -8,7 +7,7 @@ class Day14 extends BaseDay {
 
   @override
   String? resolveTask1(List<String> lines) {
-    /*var field = Field(101, 103);
+    var field = Field(101, 103);
     for (var line in lines) {
       var rawRobot = line.split(" ");
       if (rawRobot.length != 2) {
@@ -61,8 +60,7 @@ class Day14 extends BaseDay {
         robotsOfThirdQuadrant.length *
         robotsOfFourthQuadrant.length;
     print("Solution: $solution");
-    return "$solution";*/
-    return null;
+    return "$solution";
   }
 
   @override
@@ -92,10 +90,6 @@ class Day14 extends BaseDay {
       counter++;
       if(field.containsConcentratedItems(30)) {
         break;
-      }
-
-      if (counter % 10000 == 0) {
-        print("Counter: $counter");
       }
     } while (true);
 
