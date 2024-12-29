@@ -29,24 +29,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var listItems = Days.values.where((e) => e.page is BaseDay).toList().reversed.toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Advent of Code 2024'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: Days.values.where((e) => e.page is BaseDay).map((day) {
-            return ElevatedButton(
-              onPressed: () {
+        child: ListView.builder(
+          itemCount: listItems.length,
+          itemBuilder: (context, index) {
+            var day = listItems.elementAt(index);
+            return ListTile(
+              title: Text(day.title),
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => day.page),
                 );
               },
-              child: Text(day.title),
             );
-          }).toList(),
+          },
         ),
       ),
     );
