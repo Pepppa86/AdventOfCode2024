@@ -17,6 +17,7 @@ import '../pages/day13.dart';
 import '../pages/day14.dart';
 import '../pages/day15.dart';
 import '../pages/day17.dart';
+import '../pages/day18.dart';
 import 'enums.dart';
 
 extension DaysExtension on Days {
@@ -109,6 +110,8 @@ extension DaysExtension on Days {
         return const Day16();
       case Days.day17:
         return const Day17();
+      case Days.day18:
+        return const Day18();
       default:
         return Container();
     }
